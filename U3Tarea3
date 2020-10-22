@@ -1,0 +1,120 @@
+import java.text.NumberFormat;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+/**
+ * Lee un número por teclado que pida el precio de un producto (puede tener
+ * decimales) y calcule el precio final con IVA. El IVA puede ser del 4%, 10% y
+ * 21%. Hacer las tres opciones con un IF. Hacer el ejercicio utilizando switch.
+ * 
+ * @author Ricardo Antonio Balthazar Filho
+ *
+ */
+public class U3Tarea3 {
+
+	// VARIABLES
+	private static double precio = 0;
+	private static String precioFormat = "";
+	private static int ivaElegido = 0;
+	private static boolean salirMenu = false;
+
+	// FORMATO EURO
+	private static NumberFormat formatoEuro = NumberFormat.getCurrencyInstance();
+
+	// SCANNER
+	private static Scanner scaner = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		
+		recojerPrecio();//Llama la funcion para recojer el valor del Precio.
+	}
+	
+	/**
+	* Recoje el precio
+ 	*/
+	private static void recojerPrecio() {
+		
+		System.out.println("\n------------------------------------------");
+		System.out.println("\t  Calculadora de I.V.A");
+		System.out.println("------------------------------------------");
+		System.out.print("    Introduce el precio del producto: ");
+		
+		while (!scaner.hasNextDouble()) { // Mientras no tenga un Float en el escaner, pideme uno
+			System.out.println("------------------------------------------");
+			System.out.println("     El valor debe ser un númerico!!!");
+			System.out.println("------------------------------------------");
+			System.out.print("    Introduce el precio del producto: ");
+			scaner.nextLine(); // Dame una linea limpia
+		}
+		System.out.println("------------------------------------------");
+		precio = scaner.nextDouble(); // Asigna el double
+		menuIVA();// Llama a la funcion del menu IVA
+	}
+	
+	/**
+	 * Muestra el menu de seleccion de iva y calcula segun lo elegido.
+	 */
+	private static void menuIVA() {
+		
+		while (!salirMenu) {
+			precioFormat = formatoEuro.format(precio);//Le doy formato de euro al valor original introducido
+			System.out.println("\tPrecio del producto: "+precioFormat);
+			System.out.println("\n  1- 4%");
+			System.out.println("  2- 10%");
+			System.out.println("  3- 21%");
+			System.out.println("  4- Probar con otro precio\n");
+			System.out.print("    Elige el I.V.A. a aplicar: ");
+
+			try {//Este try intentara ejecutar el codigo pero si me da error ejecutara el catch de abajo
+				
+				ivaElegido = scaner.nextInt();
+				double precioConIva = 0;//Aqui almacenare el valor del precio con el iva ya sumado
+				
+				switch (ivaElegido) {
+				case 1:
+					precioConIva = (precio * 0.04) + precio;
+					precioFormat = formatoEuro.format(precioConIva);//Le doy formato de euro al valor final
+					System.out.println("------------------------------------------");
+					System.out.println("*El precio del producto con un I.V.A del 4%\n es de " + precioFormat) ;
+					System.out.println("------------------------------------------");
+					System.out.println("\t   Probar con otro I.V.A.");
+					break;
+				case 2:
+					precioConIva = (precio * 0.10) + precio;
+					precioFormat = formatoEuro.format(precioConIva);//Le doy formato de euro al valor final
+					System.out.println("------------------------------------------");
+					System.out.println("*El precio del producto con un I.V.A del 10%\n es de " + precioFormat);
+					System.out.println("------------------------------------------");
+					System.out.println("\t   Probar con otro I.V.A.");
+					break;
+				case 3:
+					precioConIva = (precio * 0.21) + precio;
+					precioFormat = formatoEuro.format(precioConIva);//Le doy formato de euro al valor final
+					System.out.println("------------------------------------------");
+					System.out.println("*El precio del producto con un I.V.A del 21%\n es de " + precioFormat);
+					System.out.println("------------------------------------------");
+					System.out.println("\t   Probar con otro I.V.A.");
+					break;
+				case 4:
+					recojerPrecio();//Vuelvo a pedir que me ponga el precio.
+					break;  
+				default:
+					System.out.println("------------------------------------------");
+					System.out.println("El valor introducido no es valido!!!");
+					System.out.println("------------------------------------------");
+				}
+			} catch (InputMismatchException e) {//Si hubo un error con el Input(teclas presionadas) haz lo de abajo y intenta denuevo.
+				System.out.println("------------------------------------------");
+				System.out.println("Inserte un número!!!");
+				System.out.println("------------------------------------------");
+				scaner.next();//Me da una linea limpia.
+
+			}
+			
+
+		}
+	}
+
+
+}
