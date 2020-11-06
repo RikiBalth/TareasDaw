@@ -1,0 +1,273 @@
+import java.text.Normalizer;
+import java.util.Scanner;
+
+/**
+ * Ejercicio 1: Crea una aplicación que nos pida un día de la semana y que nos
+ * diga si es un día laboral o no.
+ * 
+ * Ejercicio 2: Crea una aplicación que cuente el número de veces que aparece la
+ * letra 'o' en la siguiente frase "Lo único imposible es aquello que no
+ * intentas" y muestre el resultado. Convierte la frase a mayúsculas y muestra
+ * el resultado. Elimina los espacios del texto y muestra el resultado.
+ * 
+ * Ejercicio 3: (Mejora ejercicio 2)
+ * 
+ * Basándote en el ejercicio anterior, haz una aplicación que solicite que
+ * introduzcas una frase y crea un menú con 4 opciones:
+ * 
+ * 1. Contar las veces que aparece una letra. (Solicitar la letra que quieres
+ * que busque dentro del texto) 2. Convertir a mayúsculas. 3. Elimine los
+ * espacios en blanco. 4. Salir.
+ * 
+ * Mientras no seleccione la opción 4 que vuelva a solicitar otra frase y vuelva
+ * a mostrar el menú.
+ * 
+ * @author Ricardo Antonio Balthazar Filho
+ *
+ */
+public class U3Tarea12 {
+
+	// SCANNER
+	private static Scanner scaner = new Scanner(System.in);
+
+	public static void main(String[] args) {
+
+		 menu();
+	}
+
+	private static void menuej3() {
+		// VARIABLES
+		String frase = "";
+		String letra = "";
+		int repetidas = 0;
+		int eleccion = 0;
+		
+		//Limpiame el scaner
+		scaner.nextLine();
+
+		// HEAD
+		System.out.println("------------------------------------------");
+		System.out.print("Introduce una frase: ");
+		frase = scaner.nextLine();
+
+		// HEAD
+		System.out.println("------------------------------------------");
+		System.out.println("Frase seleccionada: " + frase);
+		System.out.println("------------------------------------------");
+		System.out.println("\tElige una opción");
+		System.out.println("\n  1- Contador letras repetidas.");
+		System.out.println("  2- Convertir a MAYUSCULAS.");
+		System.out.println("  3- Convertir a minusculas.");
+		System.out.println("  4- Eliminar espacios.");
+		System.out.println("  5- Volver al menu.");
+		System.out.println("------------------------------------------");
+		System.out.print(" Opción elegida: ");
+
+		// COJOME EL SIGUIENTE INT
+		while (!scaner.hasNextInt()) {
+			System.out.println("  El valor debe ser un numero!!!\n");
+			System.out.print("   Opción elegida: ");
+			scaner.next();
+		}
+		eleccion = scaner.nextInt();
+
+		switch (eleccion) {
+		case (1):
+			// HEAD
+			System.out.print("Introduce una letra para buscar: ");
+			letra = scaner.next();
+
+			// QUIERO SOLO UNA LETRA
+			while (letra.length() != 1) {
+				System.out.print("\tDebes introducir una letra!: ");
+				letra = scaner.next();
+			}
+
+			// BUCLE CONTAR LETRAS IGUALES
+			for (int i = 0; i < frase.length(); i++) {
+				if (frase.charAt(i) == letra.charAt(0)) {
+					repetidas++;
+				}
+			}
+
+			// RESULTADO
+			System.out.println("------------------------------------------");
+			System.out.println("La letra \"" + letra + "\" se repite: " + repetidas + " veces");
+			break;
+
+		case (2):
+			// TRANSFORMAR A MAYUSCULAS
+			System.out.println("------------------------------------------");
+			System.out.println("Frase en mayuscula: " +frase.toUpperCase());
+
+			break;
+
+		case (3):
+			// TRANSFORMAR A MINUSCULAS
+			System.out.println("------------------------------------------");
+			System.out.println("Frase en minuscula: " +frase.toLowerCase());
+			break;
+
+		case (4):
+			// QUITAR ESPACIOS EN BLANCO
+			System.out.println("------------------------------------------");
+			System.out.println("Frase sin espacios: " +frase.replaceAll("\\s", ""));
+			break;
+		case (5):
+			menu();
+			break;
+		default:
+			System.out.println("Opcion no valida");
+			break;
+
+		}
+		
+		menuej3();
+	}
+
+	private static void loImposible() {
+		// VARIABLES
+		String frase = "Lo único imposible es aquello que no intentas";
+		String letra = "";
+		int repetidas = 0;
+
+		// BUCLE CONTAR LETRAS IGUALES
+		for (int i = 0; i < frase.length(); i++) {
+			letra = frase.substring(i, (i + 1));
+			if (letra.equals("o")) {
+				repetidas++;
+			}
+		}
+
+		// RESULTADO
+		System.out.println("La letra \"o\" se repite: " + repetidas + " veces");
+
+		// TRANSFORMAR A MINUSCULAS
+		System.out.println(frase.toLowerCase());
+		// TRANSFORMAR A MAYUSCULAS
+		System.out.println(frase.toUpperCase());
+		// QUITAR ESPACIOS EN BLANCO
+		System.out.println(frase.replaceAll("\\s", ""));
+
+		// REINICIO
+		System.out.print("Volver al menu principal? (S)si (N)no: ");
+		String respuesta = "";
+		respuesta = scaner.next();
+		if (respuesta.equalsIgnoreCase("S")) {
+			menu();
+		} else if (respuesta.equalsIgnoreCase("N")) {
+			loImposible();
+		} else {
+			System.out.print("Lo tomare como un si...");
+			menu();
+		}
+	}
+
+	private static void diasSemana() {
+		// VARIABLES
+		String diaSemana = "";
+
+		// HEAD
+		System.out.println("----------------------------------------------");
+		System.out.println("          Dias laborales ");
+		System.out.println("----------------------------------------------");
+		System.out.print("Introduce un dia de la semana: ");
+
+		// COJEME EL SIGUIENTE STRING EN MINUSCULAS Y SIN TILDES
+		diaSemana = scaner.next().toLowerCase();
+		diaSemana = Normalizer.normalize(diaSemana, Normalizer.Form.NFD);
+		diaSemana = diaSemana.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+
+		switch (diaSemana) {
+		case ("lunes"):
+			System.out.println("Lunes es un dia laboral");
+			break;
+		case ("martes"):
+			System.out.println("Martes es un dia laboral");
+			break;
+		case ("miercoles"):
+			System.out.println("Miercoles es un dia laboral");
+			break;
+		case ("jueves"):
+			System.out.println("Jueves es un dia laboral");
+			break;
+		case ("viernes"):
+			System.out.println("Viernes es un dia laboral");
+			break;
+		case ("sabado"):
+			System.out.println("Sabado es un dia no laboral");
+			break;
+		case ("domingo"):
+			System.out.println("Domingo es un dia no laboral");
+			break;
+		default:
+			System.out.println("Error el dia introducido no es valido!");
+			break;
+		}
+
+		// REINICIO
+		System.out.print("Volver al menu principal? (S)si (N)no: ");
+		String respuesta = "";
+		respuesta = scaner.next();
+		if (respuesta.equalsIgnoreCase("S")) {
+			menu();
+		} else if (respuesta.equalsIgnoreCase("N")) {
+			diasSemana();
+		} else {
+			System.out.print("Lo tomare como un si...");
+			menu();
+		}
+	}
+
+	private static void menu() {
+		// VARIABLES
+		boolean salirMenu = false;
+		int eleccion = 0;
+
+		// BUCLE MENU
+		while (!salirMenu) {
+
+			// HEAD
+			System.out.println("------------------------------------------");
+			System.out.println("\tElige una opción");
+			System.out.println("\n  1- Ejercicio 1.");
+			System.out.println("  2- Ejercicio 2.");
+			System.out.println("  3- Ejercicio 3.");
+			System.out.println("------------------------------------------");
+			System.out.print("   Opción elegida: ");
+
+			// COJEME EL SIGUIENTE INT
+			while (!scaner.hasNextInt()) {
+				System.out.println("  El valor debe ser un numero entero!!!\n");
+				System.out.print("   Opción elegida: ");
+				scaner.next();
+			}
+			eleccion = scaner.nextInt();
+
+			switch (eleccion) {
+			case 1:// 1- Tabla de multiplicar.
+				 diasSemana();
+				
+				salirMenu = true;
+				break;
+
+			case 2:// 2- Verificador de notas.
+				 loImposible();
+				
+				salirMenu = true;
+				break;
+
+			case 3:// 3- Hola!
+				 menuej3();
+				salirMenu = true;
+				break;
+
+			default:// ERROR VALOR INTRODUCIDO NO VALIDO
+				System.out.println(" Esa opcion no es valida!\n");
+				break;
+			}
+
+		}
+	}
+
+}
