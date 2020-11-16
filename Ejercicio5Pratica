@@ -1,0 +1,109 @@
+import java.util.Scanner;
+
+/**
+ * Realizar un algoritmo que imprima el siguiente menú: 1. Mostrar números
+ * impares del 10 al 30. 2. Calcular el factorial de un número. 3. Indicar si
+ * dos números son divisibles. 4. Salir. Siempre al terminar, el menú debe
+ * aparecer de nuevo hasta elegir la opción 4.
+ * 
+ * @author Salvador Áleman , Ricardo Antonio
+ *
+ */
+public class ejercicio5 {
+
+	public static void main(String[] args) {
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////1.Numero Impares/////////////////////////////////////////////
+		//CABECERA
+		System.out.println("\n------------------------------------------");
+		System.out.println("      Números impares entre 10 y 30       ");
+		System.out.println("------------------------------------------\n");
+		
+		// BUCLE QUE EMPIEZA CON "i" = 10 Y CORRERA HASTA QUE "i" SEA IGUAL A 30
+		for(int i = 10;i <= 30;i++) {
+			if(i % 2 != 0) { // Si al dividir "i" por 2 el resto es distinto a 0 "n" sera impar.
+				System.out.print(i);
+				if(i<29) {
+					System.out.print(",");//Añade comas.
+				}else {
+					System.out.println(".");//Añade punto final.
+				}
+			}
+			
+		}
+		//////////////////////////////////1.Fin//////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+    /////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////2.Calcular el factorial//////////////////////////////////////
+		//CABECERA
+		System.out.println("\n------------------------------------------");
+		System.out.println("            Factorial de 3                ");
+		System.out.println("------------------------------------------\n");
+		
+		// INICIALIZAR LAS VARIABLES
+		int n = 3;
+		int factor = 1; // El factorial empieza multiplicando por 1
+
+		// BUCLE PARA FACTORIAL EL BUCLE CORRERA LA MISMA CANTIDAD DE VECES QUE LA DEL NUMERO A FACTORIZAR
+		while (n != 0) {
+			factor = factor * n; // Cada vuelta vamos multiplicando el factor resultado por "n".
+			n--; // Restamos "n" para ir corriendo por todas las multiplicaciones
+		}
+		// Primera vuelta = 3*1 = 3
+		// Segunda vuelta = 2*3 = 6
+		// Tercera vuelta = 1*6 = 6
+		// Resultado = 6
+		System.out.println("El factor de 3 es = " + factor);
+		///////////////////////////////////////2.Fin////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////		
+		
+		
+    ////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////3.Numeros divisible/////////////////////////////////////////
+		// INICIAMOS SCANER
+		Scanner scaner = new Scanner(System.in);
+		
+		//CABECERA
+		System.out.println("\n------------------------------------------");
+		System.out.println("     ¿Estos numeros son divisibles?       ");
+		System.out.println("------------------------------------------\n");
+		System.out.print("Introduce el primer número entero: ");
+		
+		// MIEMTRAS NO TENGA UN INT EN EL SCANNER PIDEME UNO Y ASIGNAMELO
+		while (!scaner.hasNextDouble()) {
+			System.out.println("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("   El valor debe ser un número entero.");
+			System.out.println("¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡\n");
+			System.out.print("Introduce un número entero: ");
+			scaner.nextLine(); // Con esto nos aseguramos cojer una linea limpia del scanner.
+		}
+		int valor1 = scaner.nextInt();
+		scaner.nextLine(); //Cierro la linea del nextInt anterior
+		
+		//CABECERA
+		System.out.print("Introduce el segundo número entero: ");
+		
+		// MIEMTRAS NO TENGA UN INT EN EL SCANNER PIDEME UNO Y ASIGNAMELO
+		while (!scaner.hasNextDouble()) {
+			System.out.println("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("   El valor debe ser un número entero.");
+			System.out.println("¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡\n");
+			System.out.print("Introduce un número entero: ");
+			scaner.nextLine(); // Con esto nos aseguramos cojer una linea limpia del scanner.
+		}
+		int valor2 = scaner.nextInt();
+		scaner.nextLine(); //Cierro la linea del nextInt anterior
+		
+		// SI AL DIVIDIR EL VALOR1 POR EL VALOR2 EL RESTO ES 0 ESOS NÚMEROS SON DIVISIBLES
+		if(valor1 % valor2 == 0) {
+			System.out.println("El numero "+valor1+ " y " + valor2 + " son divisibles.");
+		}else {
+			System.out.println("El numero "+valor1+ " y " + valor2 + " no son divisibles.");
+		}
+		/////////////////////////////////3.Fin/////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+	}
+
+}
