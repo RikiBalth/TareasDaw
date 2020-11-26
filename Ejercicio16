@@ -1,0 +1,119 @@
+
+import java.util.Scanner;
+
+/**
+ * Pedir la hora al usuario (hora, minutos y segundos) y devolverla al segundo
+ * siguiente.
+ * 
+ * @author Ricardo Antonio Balthazar Filho
+ */
+public class U3Tarea16 {
+
+	public static void main(String[] args){
+
+		// SCANNER
+		Scanner scaner = new Scanner(System.in);
+
+		// VARIABLES
+		String horaEntrada = "";
+		int horas = 0;
+		int minutos = 0;
+		int segundos = 0;
+		boolean formatoCorrecto = false;
+
+		System.out.println("\t------------------------------------------");
+		System.out.println("\t                La hora                   ");
+		System.out.println("\t------------------------------------------");
+		System.out.println("\t   Introducce una hora en este formato    ");
+		System.out.println("\t    Minimo 00:00:00 / Maximo 23:59:59     ");
+		System.out.print("\nHora elegida: ");
+
+		horaEntrada = scaner.nextLine();
+		System.out.println("");//Pongo un salto de linea para que se quede bonito
+		
+		if (horaEntrada.length() == 8 && horaEntrada.charAt(2) == ':' && horaEntrada.charAt(5) == ':') {
+			formatoCorrecto = true;
+
+			/////////////////////////////////////////// HORA//////////////////////////////////////////////////
+			String hora = horaEntrada.substring(0, 2);//Cojo la hora como un string
+			try {
+				horas = Integer.parseInt(hora);//La convierto en un int
+				if (horas > 23) {//compruebo que no me hayan puesto horas raras
+					System.out.println("El valor de la hora \"" + horas + "\" no es un valor valido (Max:23)");
+					System.out.println("Pruebalo denuevo.");
+					main(args);//reinicio
+				}
+			} catch (NumberFormatException e) {//si me introduccieron una letra saco un error y reinicio
+				System.out.println("El valor de la hora \"" + hora + "\" no es un valor valido");
+				System.out.println("Pruebalo denuevo.");
+				main(args);//reinicio
+			}
+
+			/////////////////////////////////////////// MINUTOS///////////////////////////////////////////////
+			String minuto = horaEntrada.substring(3, 5);
+			try {
+				minutos = Integer.parseInt(minuto);
+				if (minutos > 59) {
+					System.out.println("El valor de los segundos \"" + minutos + "\" no es un valor valido (Max:59)");
+					System.out.println("Pruebalo denuevo.");
+					main(args);
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("El valor de los minutos \"" + minuto + "\" no es un valor valido");
+				System.out.println("Pruebalo denuevo.");
+				main(args);
+			}
+			///////////////////////////////////////////SEGUNDOS//////////////////////////////////////////////
+			String segundo = horaEntrada.substring(6);
+			try {
+				segundos = Integer.parseInt(segundo);
+				if (segundos > 59) {
+					System.out.println("El valor de los segundos \"" + segundos + "\" no es un valor valido (Max:59)");
+					System.out.println("Pruebalo denuevo.");
+					main(args);
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("El valor de los segundos \"" + segundo + "\" no es un valor valido");
+				System.out.println("Pruebalo denuevo.");
+				main(args);
+			}
+			//////////////////////////////////////Formato NO valido///////////////////////////////////////////
+		} else {
+			System.out.println("El formato " + horaEntrada + " no es un formato valido");
+			main(args);
+		}
+			/////////////////////////////////////INICIAR RELOJ////////////////////////////////////////////////
+		if (formatoCorrecto) {
+			iniciarReloj(horas, minutos, segundos);
+		}
+
+		scaner.close();
+	}
+
+	private static void iniciarReloj(int horas, int minutos, int segundos) {
+		for (int i = 0; i < 86400; i++) {//Creo un bucle de 24h
+			segundos++;//añado un segundo cada vuelta
+			if (segundos == 60) {//Si los segundos son igual a 60
+				segundos = 00; //reseteamelos a 00
+				minutos++;// y sumame un minuto
+			}
+			if (minutos == 60) {
+				minutos = 00;
+				horas++;
+			}
+			if (horas == 24) {
+				horas = 00;
+				minutos = 00;
+				segundos = 00;
+			}
+			String horaFinal = String.format("%02d", horas) + ":" + String.format("%02d", minutos) + ":"
+					+ String.format("%02d", segundos);//Les doy formatos a las horas para que me enseñen siempre 2 digitos
+			System.out.print("\r" + horaFinal);//Borro la linea y la reescribo con los valores nuevos
+			try {
+				Thread.sleep(1000);//Espero 1 segundo antes de ejecutar denuevo el bucle
+			} catch (InterruptedException e) {
+				System.out.print("Algo interrumpio la ejecucion de la hora");
+			}
+		}
+	}
+}
